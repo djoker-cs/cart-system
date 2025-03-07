@@ -8,7 +8,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import { useNavigation, StackActions, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useShoppingCart } from './src/context/ShoppingCartContext';
 import { RootStackParamList, CartItem } from './src/types';
@@ -16,8 +16,14 @@ import { styles } from './src/styles/CheckoutScreen.styles.tsx';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Checkout'>;
 
+type RouteParams = {
+  setHasCompletedPurchase: (value: boolean) => void;
+};
+
 export default function CheckoutScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute();
+  const { setHasCompletedPurchase } = route.params as RouteParams;
   const { cartItems, getTotalPrice, clearCart } = useShoppingCart();
 
   const handleCheckout = () => {
@@ -29,6 +35,7 @@ export default function CheckoutScreen() {
           text: 'OK',
           onPress: () => {
             clearCart();
+            setHasCompletedPurchase(true);
             navigation.dispatch(
               StackActions.replace('Home')
             );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ShoppingCartProvider } from './src/context/ShoppingCartContext';
@@ -9,6 +9,8 @@ import CheckoutScreen from './CheckoutScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [hasCompletedPurchase, setHasCompletedPurchase] = useState(false);
+
   return (
     <NavigationContainer>
       <ShoppingCartProvider>
@@ -37,13 +39,22 @@ export default function App() {
             component={CartScreen}
             options={{
               title: 'Shopping Cart',
+              ...(hasCompletedPurchase && {
+                headerLeft: () => null,
+                gestureEnabled: false,
+              }),
             }}
           />
           <Stack.Screen 
             name="Checkout" 
             component={CheckoutScreen}
+            initialParams={{ setHasCompletedPurchase }}
             options={{
               title: 'Checkout',
+              ...(hasCompletedPurchase && {
+                headerLeft: () => null,
+                gestureEnabled: false,
+              }),
             }}
           />
         </Stack.Navigator>
