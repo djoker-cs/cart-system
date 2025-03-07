@@ -7,9 +7,8 @@ import {
   Alert,
   Image,
   SafeAreaView,
-  BackHandler,
 } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useShoppingCart } from './src/context/ShoppingCartContext';
 import { RootStackParamList, CartItem } from './src/types';
@@ -21,19 +20,6 @@ export default function CheckoutScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { cartItems, getTotalPrice, clearCart } = useShoppingCart();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        navigation.navigate('Cart');
-        return true;
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation])
-  );
-
   const handleCheckout = () => {
     Alert.alert(
       'Success',
@@ -43,7 +29,9 @@ export default function CheckoutScreen() {
           text: 'OK',
           onPress: () => {
             clearCart();
-            navigation.navigate('Home');
+            navigation.dispatch(
+              StackActions.replace('Home')
+            );
           },
         },
       ],

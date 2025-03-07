@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
-  BackHandler,
 } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useShoppingCart } from './src/context/ShoppingCartContext';
 import { RootStackParamList, CartItem } from './src/types';
@@ -19,19 +18,6 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'Cart'>;
 export default function CartScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { cartItems, increaseQuantity, decreaseQuantity, getTotalPrice } = useShoppingCart();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        navigation.navigate('Home');
-        return true;
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation])
-  );
 
   const renderItem = ({ item }: { item: CartItem }) => (
     <View style={styles.cartItem}>
