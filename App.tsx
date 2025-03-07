@@ -12,21 +12,39 @@ export default function App() {
   return (
     <NavigationContainer>
       <ShoppingCartProvider>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator
+          screenOptions={{
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+          }}
+          initialRouteName="Home"
+        >
           <Stack.Screen 
             name="Home" 
-            component={HomeScreen} 
-            options={{ title: 'Products' }}
+            component={HomeScreen}
+            options={{
+              title: 'Products',
+              gestureEnabled: false,
+              headerShown: true,
+              headerLeft: () => null,
+            }}
           />
           <Stack.Screen 
             name="Cart" 
-            component={CartScreen} 
-            options={{ title: 'Shopping Cart' }}
+            component={CartScreen}
+            options={{
+              title: 'Shopping Cart',
+            }}
           />
           <Stack.Screen 
             name="Checkout" 
-            component={CheckoutScreen} 
-            options={{ title: 'Checkout' }}
+            component={CheckoutScreen}
+            options={{
+              title: 'Checkout',
+            }}
           />
         </Stack.Navigator>
       </ShoppingCartProvider>
