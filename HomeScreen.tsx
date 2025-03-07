@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  BackHandler,
+  Alert,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useShoppingCart, products } from './src/context/ShoppingCartContext';
 import { RootStackParamList, Product } from './src/types';
@@ -18,6 +20,27 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { addToCart } = useShoppingCart();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(
+          'Exit App',
+          'Are you sure you want to exit?',
+          [
+            { text: 'Cancel', style: 'cancel', onPress: () => {} },
+            { text: 'OK', style: 'destructive', onPress: () => BackHandler.exitApp() },
+          ],
+          { cancelable: false }
+        );
+        return true; // Prevent default behavior (exit app)
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
   const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.productCard}>
