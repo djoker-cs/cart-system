@@ -17,7 +17,11 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const { addToCart } = useShoppingCart();
+  const { addToCart, cartItems } = useShoppingCart();
+
+  const getTotalItems = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
 
   const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.productCard}>
@@ -54,7 +58,14 @@ export default function HomeScreen() {
         style={styles.cartButton}
         onPress={() => navigation.navigate('Cart')}
       >
-        <Text style={styles.buttonText}>Go to Cart</Text>
+        <View style={styles.cartButtonContent}>
+          <Text style={styles.buttonText}>Go to Cart</Text>
+          {getTotalItems() > 0 && (
+            <View style={styles.cartCounter}>
+              <Text style={styles.cartCounterText}>{getTotalItems()}</Text>
+            </View>
+          )}
+        </View>
       </TouchableOpacity>
     </SafeAreaView>
   );

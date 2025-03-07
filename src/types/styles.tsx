@@ -22,6 +22,9 @@ export interface HomeScreenStyles extends SharedStyles {
   productPrice: TextStyle;
   addButton: ViewStyle;
   cartButton: ViewStyle;
+  cartButtonContent: ViewStyle;
+  cartCounter: ViewStyle;
+  cartCounterText: TextStyle;
 }
 
 export interface CartScreenStyles extends SharedStyles {

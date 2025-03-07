@@ -76,6 +76,26 @@ export const styles = StyleSheet.create<HomeScreenStyles>({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  cartButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cartCounter: {
+    backgroundColor: colors.white,
+    borderRadius: 12,
+    minWidth: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 8,
+    paddingHorizontal: 6,
+  },
+  cartCounterText: {
+    color: colors.success,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
   buttonText: {
     ...sharedStyles.buttonText,
     fontSize: 16,
