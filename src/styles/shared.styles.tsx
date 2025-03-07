@@ -1,4 +1,6 @@
+import React from 'react';
 import { StyleSheet } from 'react-native';
+import { SharedStyles } from '../types/styles';
 
 export const colors = {
   primary: '#007AFF',
@@ -9,9 +11,9 @@ export const colors = {
     primary: '#000000',
     secondary: '#666666',
   },
-};
+} as const;
 
-export const sharedStyles = StyleSheet.create({
+export const sharedStyles = StyleSheet.create<SharedStyles>({
   container: {
     flex: 1,
     backgroundColor: colors.background,

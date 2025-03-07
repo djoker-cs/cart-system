@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useShoppingCart } from './src/context/ShoppingCartContext';
-import { styles } from './src/styles/CheckoutScreen.styles';
-
-type RootStackParamList = {
-  Home: undefined;
-  Cart: undefined;
-  Checkout: undefined;
-};
+import { RootStackParamList, CartItem } from './src/types';
+import { styles } from './src/styles/CheckoutScreen.styles.tsx';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Checkout'>;
 
@@ -34,23 +37,25 @@ export default function CheckoutScreen() {
     );
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: CartItem }) => (
     <View style={styles.checkoutItem}>
+      <Image source={{ uri: item.image }} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
+        <Text style={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</Text>
       </View>
-      <Text style={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={cartItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <Text style={styles.title}>Order Summary</Text>
         }
@@ -69,7 +74,7 @@ export default function CheckoutScreen() {
           </View>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

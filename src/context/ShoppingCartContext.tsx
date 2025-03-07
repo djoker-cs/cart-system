@@ -1,14 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
-
-interface CartItem extends Product {
-  quantity: number;
-}
+import { Product, CartItem } from '../types';
 
 interface ShoppingCartContextType {
   cartItems: CartItem[];
@@ -19,6 +10,44 @@ interface ShoppingCartContextType {
   clearCart: () => void;
   getTotalPrice: () => number;
 }
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: 'iPhone 13 Pro',
+    price: 999.99,
+    image: 'https://img.freepik.com/free-photo/smartphone-balancing-with-pink-background_23-2150271746.jpg',
+    description: 'Latest iPhone model with advanced camera system',
+  },
+  {
+    id: 2,
+    name: 'MacBook Pro',
+    price: 1299.99,
+    image: 'https://img.freepik.com/free-photo/laptop-white-background_160097-195.jpg',
+    description: 'Powerful laptop for professionals',
+  },
+  {
+    id: 3,
+    name: 'AirPods Pro',
+    price: 249.99,
+    image: 'https://img.freepik.com/free-photo/wireless-earphones-levitating-gray-background_23-2150271756.jpg',
+    description: 'Premium wireless earbuds with noise cancellation',
+  },
+  {
+    id: 4,
+    name: 'Apple Watch',
+    price: 399.99,
+    image: 'https://img.freepik.com/free-photo/smart-watch-dark-background_1163-300.jpg',
+    description: 'Smart watch with health monitoring features',
+  },
+  {
+    id: 5,
+    name: 'iPad Air',
+    price: 599.99,
+    image: 'https://img.freepik.com/free-photo/tablet-dark-background_1163-301.jpg',
+    description: 'Versatile tablet for work and entertainment',
+  },
+];
 
 const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(undefined);
 
@@ -90,12 +119,4 @@ export const ShoppingCartProvider: React.FC<{ children: ReactNode }> = ({ childr
       {children}
     </ShoppingCartContext.Provider>
   );
-};
-
-export const products: Product[] = [
-  { id: 1, name: 'Smartphone', price: 699.99 },
-  { id: 2, name: 'Laptop', price: 999.99 },
-  { id: 3, name: 'Headphones', price: 149.99 },
-  { id: 4, name: 'Smartwatch', price: 299.99 },
-  { id: 5, name: 'Tablet', price: 449.99 },
-]; 
+}; 
