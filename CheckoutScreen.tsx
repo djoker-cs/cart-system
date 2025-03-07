@@ -1,18 +1,75 @@
 import React from 'react';
-import { View, Text, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useShoppingCart } from './src/context/ShoppingCartContext';
+import { styles } from './src/styles/CheckoutScreen.styles';
 
-export default function CheckoutScreen({ navigation }) {
+type RootStackParamList = {
+  Home: undefined;
+  Cart: undefined;
+  Checkout: undefined;
+};
+
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Checkout'>;
+
+export default function CheckoutScreen() {
+  const navigation = useNavigation<NavigationProp>();
+  const { cartItems, getTotalPrice, clearCart } = useShoppingCart();
+
+  const handleCheckout = () => {
+    Alert.alert(
+      'Success',
+      'Checkout successful',
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            clearCart();
+            navigation.navigate('Home');
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.checkoutItem}>
+      <View style={styles.itemInfo}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
+      </View>
+      <Text style={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Checkout Screen</Text>
-      <Button title="Checkout" color="#6200ea" onPress={() => {
-        Alert.alert('Checkout successful', '', [{ text: 'OK', onPress: () => navigation.navigate('Home') }]);
-      }} />
+      <FlatList
+        data={cartItems}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
+        ListHeaderComponent={
+          <Text style={styles.title}>Order Summary</Text>
+        }
+        ListFooterComponent={
+          <View style={styles.footer}>
+            <View style={styles.totalContainer}>
+              <Text style={styles.totalLabel}>Total Amount:</Text>
+              <Text style={styles.totalAmount}>${getTotalPrice().toFixed(2)}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.checkoutButton}
+              onPress={handleCheckout}
+            >
+              <Text style={styles.buttonText}>Complete Checkout</Text>
+            </TouchableOpacity>
+          </View>
+        }
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f4f4f4' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-});
