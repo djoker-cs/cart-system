@@ -16,7 +16,7 @@ export const products: Product[] = [
     id: 1,
     name: 'Versace Eros EDP',
     price: 999.99,
-    image: 'https://www.versace.com/dw/image/v2/BGWN_PRD/on/demandware.static/-/Sites-ver-master-catalog/default/dwee6cbd73/original/90_R740110-R100MLS_RNUL_20_ErosEDP100ml-Eros-Versace-online-store_0_5.jpg?sw=850&q=85&strip=true',
+    image: 'https://images.unsplash.com/photo-1659167664742-a592e00f5a29?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmVyc2FjZSUyMGVyb3N8ZW58MHx8MHx8fDA%3D',
     description: 'Top notes are Mint, Green Apple and Lemon; middle notes are Tonka Bean, Ambroxan and Geranium; base notes are Madagascar Vanilla, Virginian Cedar, Atlas Cedar, Vetiver and Oakmoss.',
   },
   {
