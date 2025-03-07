@@ -22,16 +22,15 @@ export default function App() {
             },
             headerTitleAlign: 'center',
           }}
-          initialRouteName="Home"
         >
           <Stack.Screen 
             name="Home" 
             component={HomeScreen}
             options={{
               title: 'Products',
-              gestureEnabled: false,
-              headerShown: true,
               headerLeft: () => null,
+              gestureEnabled: false,
+              presentation: 'modal',
             }}
           />
           <Stack.Screen 
